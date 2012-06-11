@@ -89,8 +89,8 @@ module Rack
         end
 
         def base64_url_decode(str)
-          str = str + "=" * (6 - str.size % 6) unless str.size % 6 == 0
-          return Base64.decode64(str.tr("-_", "+/"))
+          str += '=' * (4 * (str.length / 4.0).ceil - str.length)
+          Base64.decode64(str.tr("-_", "+/"))
         end
 
         # borrowed from Michael Bleigh's Rack Facebook_Connect for rewriting of the response body
